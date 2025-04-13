@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:clothing_store/services/network_caller.dart';
+import 'package:clothing_store/services/user_prefs.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,13 @@ class SigninController extends GetxController {
       final String status = response.responseData['status'];
       final String message = response.responseData['message'];
       if (status == "success") {
+        final Map<String, dynamic> data = response.responseData['data'];
+        final String userId = data['user_id'].toString();
+        final String userName = data['user_name'].toString();
+        final String userEmail = data['user_email'].toString();
+        final String? userAddress = data['user_address'].toString();
+        final String? userPhone = data['user_phone'].toString();
+        final String? userImage = data['user_image'].toString();
         final userData = response.responseData['data'];
         Get.snackbar(
           "Success",
@@ -39,6 +47,11 @@ class SigninController extends GetxController {
           backgroundColor: Colors.green,
           snackPosition: SnackPosition.BOTTOM,
         );
+        UserPrefs.saveInitialUser(id: userId, name: userName, email: userEmail);
+        UserPrefs.updateUserAddress(userAddress);
+        UserPrefs.updateUserPhone(userPhone);
+        UserPrefs.updateUserImage(userImage);
+        Get.offNamed("/home_screen");
       } else {
         Get.snackbar(
           "Failed",

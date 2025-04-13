@@ -1,8 +1,6 @@
 import 'package:clothing_store/app/app_colors.dart';
-import 'package:clothing_store/app/app_utils.dart';
 import 'package:clothing_store/view/widgets/account_creation_option.dart';
 import 'package:clothing_store/view/widgets/elevatedbutton_text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
                 TextSpan(
                   text: "The ",
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -70,6 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                 text: "Already have an account? ",
                 textbutton: "Sign in",
               ),
+              SizedBox(height: 40,),
             ],
           ),
         ],

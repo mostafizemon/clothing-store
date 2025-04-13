@@ -1,4 +1,6 @@
 import 'package:clothing_store/app/app_theme_data.dart';
+import 'package:clothing_store/view/home_screen/home_screen.dart';
+import 'package:clothing_store/view/location_screen/location_screen.dart';
 import 'package:clothing_store/view/sign_in_screen/sign_in_screen.dart';
 import 'package:clothing_store/view/signup_screen/signup_screen.dart';
 import 'package:clothing_store/view/splash_screen/splash_screen.dart';
@@ -20,6 +22,8 @@ class App extends StatelessWidget {
         GetPage(name: "/welcome_screen", page: ()=>WelcomeScreen()),
         GetPage(name: "/sign_in_screen", page: ()=>SignInScreen()),
         GetPage(name: "/signup_screen", page: ()=>SignupScreen()),
+        GetPage(name: "/location_screen", page: ()=>LocationScreen()),
+        GetPage(name: "/home_screen", page: ()=>HomeScreen()),
       ],
     );
   }

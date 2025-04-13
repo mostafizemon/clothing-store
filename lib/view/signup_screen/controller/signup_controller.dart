@@ -1,4 +1,5 @@
 import 'package:clothing_store/app/app_utils.dart';
+import 'package:clothing_store/services/user_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,14 +42,22 @@ class SignupController extends GetxController {
       final String status = response.responseData['status'];
       final String message = response.responseData['message'];
 
+
       if (status == 'success') {
+        final Map<String, dynamic> data = response.responseData['data'];
+        final String userId = data['user_id'].toString();
         Get.snackbar(
           "Success",
           message,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green[100],
         );
-        Get.offNamed("/sign_in_screen");
+        try {
+          await UserPrefs.saveInitialUser(id: userId, name: name, email: email);
+          Get.offNamed("/location_screen");
+        } catch (e) {
+          print("Error saving user: $e");
+        }
       } else {
         Get.snackbar(
           "Error",
