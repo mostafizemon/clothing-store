@@ -9,18 +9,20 @@ class InputHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(header, style: AppStyles.headline1),
-        SizedBox(height: 20),
-        Text(
-          subheader,
-          textAlign: TextAlign.center,
-          style: AppStyles.headline3,
-        ),
-        SizedBox(height: 32),
-      ],
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(header, style: AppStyles.headline1),
+          SizedBox(height: 20),
+          Text(
+            subheader,
+            textAlign: TextAlign.center,
+            style: AppStyles.headline3,
+          ),
+          SizedBox(height: 32),
+        ],
+      ),
     );
   }
 }

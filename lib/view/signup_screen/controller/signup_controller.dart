@@ -1,13 +1,14 @@
-import 'dart:convert';
 import 'package:clothing_store/app/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+
+import '../../../services/network_caller.dart';
 
 class SignupController extends GetxController {
   var isPasswordHidden = true.obs;
   var isChecked = false.obs;
   var isLoading = false.obs;
+
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
@@ -21,7 +22,7 @@ class SignupController extends GetxController {
     required String email,
     required String password,
   }) async {
-    String url = AppUtils.signup_url;
+    isLoading.value = true;
 
     final Map<String, dynamic> requestBody = {
       'user_name': name,
@@ -29,20 +30,21 @@ class SignupController extends GetxController {
       'user_password': password,
     };
 
-    try {
-      isLoading.value = true;
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(requestBody),
-      );
+    NetworkResponse response = await NetworkCaller().postRequest(
+      AppUtils.signup_url,
+      body: requestBody,
+    );
 
-      final responseData = jsonDecode(response.body);
+    isLoading.value = false;
 
-      if (responseData['status'] == 'success') {
+    if (response.isSuccess) {
+      final String status = response.responseData['status'];
+      final String message = response.responseData['message'];
+
+      if (status == 'success') {
         Get.snackbar(
           "Success",
-          responseData['message'],
+          message,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green[100],
         );
@@ -50,20 +52,18 @@ class SignupController extends GetxController {
       } else {
         Get.snackbar(
           "Error",
-          responseData['message'],
+          message,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red[100],
         );
       }
-    } catch (e) {
+    } else {
       Get.snackbar(
-        "Error",
-        "Something went wrong. Try again!",
+        "Network Error",
+        response.errorMessage,
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red[100],
       );
-    } finally {
-      isLoading.value = false;
     }
   }
 }

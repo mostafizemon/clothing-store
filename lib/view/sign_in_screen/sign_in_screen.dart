@@ -18,65 +18,74 @@ class SignInScreen extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     SigninController controller = Get.put(SigninController());
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 16),
           children: [
             SizedBox(height: 40),
-            InputHeader(
-              header: "Sign In",
-              subheader: "Hi! Welcome back, you've been missed",
-            ),
-
-            InputLabelText(label: "Email"),
-            SizedBox(height: 8),
-            TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: emailController,
-              decoration: InputDecoration(hintText: "example@gmail.com"),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Email is required";
-                }
-                final bool emailValid = RegExp(
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                ).hasMatch(emailController.value.text.trim());
-                if (!emailValid) {
-                  return "Enter a valid email";
-                }
-                return null;
-              },
-            ),
-
-            SizedBox(height: 16),
-            InputLabelText(label: "Password"),
-            SizedBox(height: 8),
-            Obx(
-              () => TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: passwordController,
-                obscureText: controller.isPasswordHidden.value,
-                decoration: InputDecoration(
-                  hintText: "***********",
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordHidden.value
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility,
-                    ),
-                    onPressed: controller.togglePasswordVisibility,
+            Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InputHeader(
+                    header: "Sign In",
+                    subheader: "Hi! Welcome back, you've been missed",
                   ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Password is required";
-                  }
-                  if (value.length < 6) {
-                    return "Password must be at least 6 characters";
-                  }
-                  return null;
-                },
+
+                  InputLabelText(label: "Email"),
+                  SizedBox(height: 8),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: emailController,
+                    decoration: InputDecoration(hintText: "example@gmail.com"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Email is required";
+                      }
+                      final bool emailValid = RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                      ).hasMatch(emailController.value.text.trim());
+                      if (!emailValid) {
+                        return "Enter a valid email";
+                      }
+                      return null;
+                    },
+                  ),
+
+                  SizedBox(height: 16),
+                  InputLabelText(label: "Password"),
+                  SizedBox(height: 8),
+                  Obx(
+                    () => TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: passwordController,
+                      obscureText: controller.isPasswordHidden.value,
+                      decoration: InputDecoration(
+                        hintText: "***********",
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            controller.isPasswordHidden.value
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility,
+                          ),
+                          onPressed: controller.togglePasswordVisibility,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password is required";
+                        }
+                        if (value.length < 6) {
+                          return "Password must be at least 6 characters";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             Column(
@@ -98,7 +107,14 @@ class SignInScreen extends StatelessWidget {
             SizedBox(height: 32),
 
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  controller.loginUser(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+                }
+              },
               child: ElevatedbuttonText(text: "Sign In"),
             ),
             SizedBox(height: 32),
