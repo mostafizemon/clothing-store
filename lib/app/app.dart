@@ -1,4 +1,5 @@
 import 'package:clothing_store/app/app_theme_data.dart';
+import 'package:clothing_store/view/bottom_nav_screen/bottom_nav_screen.dart';
 import 'package:clothing_store/view/home_screen/home_screen.dart';
 import 'package:clothing_store/view/location_screen/location_screen.dart';
 import 'package:clothing_store/view/sign_in_screen/sign_in_screen.dart';
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppThemeData.lightThemeData,
-      initialRoute: "/",
+      initialRoute: "/bottom_nav_screen",
       getPages: [
         GetPage(name: "/", page: () => SplashScreen()),
         GetPage(name: "/welcome_screen", page: ()=>WelcomeScreen()),
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
         GetPage(name: "/signup_screen", page: ()=>SignupScreen()),
         GetPage(name: "/location_screen", page: ()=>LocationScreen()),
         GetPage(name: "/home_screen", page: ()=>HomeScreen()),
+        GetPage(name: "/bottom_nav_screen", page: ()=>BottomNavScreen()),
       ],
     );
   }

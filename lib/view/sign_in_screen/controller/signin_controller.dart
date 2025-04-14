@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:clothing_store/services/network_caller.dart';
 import 'package:clothing_store/services/user_prefs.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-
 import '../../../app/app_utils.dart';
 
 class SigninController extends GetxController {
