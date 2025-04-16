@@ -14,7 +14,7 @@ class BottomNavScreen extends StatefulWidget {
 }
 
 class _BottomNavScreenState extends State<BottomNavScreen> {
-  int currentIndex = 2;
+  int currentIndex = 0;
 
   final List<Widget> screens = const [
     HomeScreen(),
@@ -40,7 +40,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             ),
           ],
         ),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 12, ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

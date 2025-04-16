@@ -39,6 +39,8 @@ dependencies:
   geolocator: ^13.0.4
   geocoding: ^3.0.0
   shared_preferences: ^2.5.3
+  carousel_slider: ^5.0.0
+  smooth_page_indicator: ^1.2.1
 
 dev_dependencies:
   flutter_test:
